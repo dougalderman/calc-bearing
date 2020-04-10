@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="robots" content="noindex">
+  <title>Calculate Bearing of Two Points on Earth</title>
+  <base href="/">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+  <p>
+  Point A: 
+    Latitude:  <input type="number" id="point-a-lat" step="0.00001" />
+    Longitude: <input type="number" id="point-a-long" step="0.00001" />
+  </p>  
+<br />
+  <p>
+  Point B: 
+    Latitude:  <input type="number" id="point-b-lat" step="0.00001" />
+    Longitude: <input type="number" id="point-b-long" step="0.00001" />
+  </p>
+  <br />
+  <p>
+    <input type="button" value="solve" onclick="calc_bearing()" /> 
+  </p>
+  <br />
+  <p>
+    Result: <output id="result"></output>
+  </p>
+<script>
+  function calc_bearing() {
+    var lata = (Math.PI / 180) * parseFloat(document.getElementById("point-a-lat").value || 0);
+    var longa = (Math.PI / 180) * parseFloat(document.getElementById("point-a-long").value || 0);
+
+    var latb = (Math.PI / 180) * parseFloat(document.getElementById("point-b-lat").value || 0);
+    var longb = (Math.PI / 180) * parseFloat(document.getElementById("point-b-long").value || 0);
+
+    var result = document.getElementById('result');
+    
+    var changeLong = longb - longa;
+
+    var y = Math.cos(latb) * Math.sin(changeLong);
+    var x = (Math.cos(lata) * Math.sin(latb)) - (Math.sin(lata) * Math.cos(latb) * Math.cos(changeLong));
+
+    var angle = Math.atan2(y, x);
+
+    result.value = (angle / (Math.PI / 180)).toFixed(2);
+
+  }
+</script>
+</body>
+</html>
